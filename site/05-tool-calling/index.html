@@ -1,0 +1,1636 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../04-agent-framework/">
+      
+      
+        <link rel="next" href="../06-mcp-integration/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Phase 5 - ツール呼び出し - Microsoft Agent Framework x Chainlit ハンズオン</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-5" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="Microsoft Agent Framework x Chainlit ハンズオン" class="md-header__button md-logo" aria-label="Microsoft Agent Framework x Chainlit ハンズオン" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Microsoft Agent Framework x Chainlit ハンズオン
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 5 - ツール呼び出し
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/your-org/your-repo" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Microsoft Agent Framework x Chainlit ハンズオン" class="md-nav__button md-logo" aria-label="Microsoft Agent Framework x Chainlit ハンズオン" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Microsoft Agent Framework x Chainlit ハンズオン
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/your-org/your-repo" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    はじめに
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ワークショップ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ワークショップ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 1 - 環境構築
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-microsoft-foundry-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 2 - GitHub Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-chainlit-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 3 - Chainlit 基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-agent-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 4 - Agent Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 5 - ツール呼び出し
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 5 - ツール呼び出し
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 学習目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤔 ツール呼び出しとは？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📁 ステップ 1: プロジェクトフォルダの作成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-weather-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 ステップ 2: Weather API キーを取得する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-toolspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ ステップ 3: tools.py の作成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ ステップ 3: tools.py の作成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ツール定義の解説
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-apppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 ステップ 4: app.py の作成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 ステップ 4: app.py の作成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 主な変更点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ▶️ ステップ 5: 実行とテスト
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="▶️ ステップ 5: 実行とテスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テストシナリオ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📄 完成コード
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 ポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ チェックポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❗ よくある問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-mcp-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 6 - MCP 連携
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    リファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    リファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../99-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 学習目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤔 ツール呼び出しとは？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📁 ステップ 1: プロジェクトフォルダの作成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-weather-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 ステップ 2: Weather API キーを取得する
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-toolspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ ステップ 3: tools.py の作成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ ステップ 3: tools.py の作成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ツール定義の解説
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-apppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 ステップ 4: app.py の作成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 ステップ 4: app.py の作成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔑 主な変更点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ▶️ ステップ 5: 実行とテスト
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="▶️ ステップ 5: 実行とテスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テストシナリオ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📄 完成コード
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 ポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ チェックポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ❗ よくある問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-5">🔧 Phase 5: エージェントにツールを追加する</h1>
+<div class="admonition info">
+<p class="admonition-title">所要時間</p>
+<p>約20分</p>
+</div>
+<h2 id="_1">🎯 学習目標</h2>
+<ul>
+<li>関数定義を使ってツールを作成する</li>
+<li>エージェントにツールを追加する</li>
+<li>UI でツール呼び出しを処理する</li>
+<li>チャットでリアルタイムの天気データを確認する</li>
+</ul>
+<hr />
+<h2 id="_2">🤔 ツール呼び出しとは？</h2>
+<p>ツール呼び出し（Tool Calling）とは、エージェントが外部の関数や API を呼び出して情報を取得する仕組みです。以下のフローで動作します：</p>
+<div class="highlight"><pre><span></span><code>ユーザーが質問する
+       ↓
+エージェントが考える（ツールが必要か判断）
+       ↓
+エージェントが行動する（ツールを呼び出す）
+       ↓
+ツールが結果を返す
+       ↓
+エージェントが応答する（結果を自然言語にまとめる）
+</code></pre></div>
+<p>例えば、「東京の天気は？」と聞くと、エージェントは <code>get_weather</code> ツールを呼び出し、リアルタイムの天気データを取得して回答します。</p>
+<hr />
+<h2 id="1">📁 ステップ 1: プロジェクトフォルダの作成</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows (PowerShell)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>phase-05
+<span class="nb">cd</span><span class="w"> </span>phase-05
+touch<span class="w"> </span>app.py<span class="w"> </span>tools.py
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="n">mkdir</span> <span class="n">phase</span><span class="p">-</span><span class="n">05</span>
+<span class="nb">cd </span><span class="n">phase</span><span class="p">-</span><span class="n">05</span>
+<span class="nb">New-Item</span> <span class="n">app</span><span class="p">.</span><span class="n">py</span><span class="p">,</span> <span class="n">tools</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="2-weather-api">🔑 ステップ 2: Weather API キーを取得する</h2>
+<div class="admonition tip">
+<p class="admonition-title">ヒント</p>
+<p><a href="https://www.weatherapi.com/">weatherapi.com</a> で無料アカウントを作成し、API キーを取得してください。無料プランで十分です。</p>
+</div>
+<p><code>.env</code> ファイルに以下を追加します：</p>
+<div class="highlight"><pre><span></span><code>WEATHER_API_KEY=your_api_key_here
+</code></pre></div>
+<hr />
+<h2 id="3-toolspy">🛠️ ステップ 3: tools.py の作成</h2>
+<p>天気情報を取得するツール関数を作成します。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span>
+    <span class="n">city</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;The name of the city (e.g., &#39;London&#39;, &#39;Tokyo&#39;)&quot;</span><span class="p">)]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    指定された都市の現在の天気を取得します。</span>
+
+<span class="sd">    気温、天候、湿度などの情報を返します。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WEATHER_API_KEY&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;エラー: .env に WEATHER_API_KEY が設定されていません&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;http://api.weatherapi.com/v1/current.json&quot;</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">city</span><span class="p">},</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+        <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">country</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">][</span><span class="s2">&quot;country&quot;</span><span class="p">]</span>
+        <span class="n">temp_c</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;temp_c&quot;</span><span class="p">]</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">:</span>
+<span class="s2">🌡️ Temperature: </span><span class="si">{</span><span class="n">temp_c</span><span class="si">}</span><span class="s2">°C</span>
+<span class="s2">☁️ Condition: </span><span class="si">{</span><span class="n">condition</span><span class="si">}</span>
+<span class="s2">💧 Humidity: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;&quot;&quot;</span>
+
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s2">&#39; の天気情報を取得できませんでした&quot;</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;エラー: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="c1"># エージェントに渡すツールのリスト</span>
+<span class="n">TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_weather</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="_3">ツール定義の解説</h3>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Annotated[str, Field(...)]</code></td>
+<td>LLM にパラメータを説明</td>
+</tr>
+<tr>
+<td>ドキュメント文字列</td>
+<td>LLM がツールの使用タイミングを判断するために読む</td>
+</tr>
+<tr>
+<td>戻り値の文字列</td>
+<td>エージェントが受け取る結果</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-apppy">🚀 ステップ 4: app.py の作成</h2>
+<p>ツール呼び出しに対応した <code>ChatAgent</code> を作成します。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">chainlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAgent</span><span class="p">,</span> <span class="n">FunctionCallContent</span><span class="p">,</span> <span class="n">FunctionResultContent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_framework.openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIChatClient</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">TOOLS</span>
+
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="n">SYSTEM_PROMPT</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;You are a helpful AI assistant named Aria.</span>
+<span class="s2">You have access to tools that let you fetch real-time information.</span>
+
+<span class="s2">Available tools:</span>
+<span class="s2">- get_weather: Get current weather for any city</span>
+
+<span class="s2">When users ask about weather, USE the get_weather tool. Don&#39;t make up weather data.</span>
+<span class="s2">For other questions, answer from your knowledge.</span>
+
+<span class="s2">Current date: </span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_chat_client</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;GitHub Models を使用する Agent Framework チャットクライアントを作成&quot;&quot;&quot;</span>
+    <span class="n">openai_client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">),</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://models.github.ai/inference&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">OpenAIChatClient</span><span class="p">(</span>
+        <span class="n">async_client</span><span class="o">=</span><span class="n">openai_client</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_agent</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ツール付きの ChatAgent を作成&quot;&quot;&quot;</span>
+    <span class="n">chat_client</span> <span class="o">=</span> <span class="n">get_chat_client</span><span class="p">()</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">ChatAgent</span><span class="p">(</span>
+        <span class="n">chat_client</span><span class="o">=</span><span class="n">chat_client</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Aria&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A helpful AI assistant with weather capabilities&quot;</span><span class="p">,</span>
+        <span class="n">instructions</span><span class="o">=</span><span class="n">SYSTEM_PROMPT</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">TOOLS</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">agent</span>
+
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_chat_start</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;チャットセッションを初期化&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">create_agent</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_new_thread</span><span class="p">()</span>
+
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span>
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;thread&quot;</span><span class="p">,</span> <span class="n">thread</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span>
+        <span class="n">content</span><span class="o">=</span><span class="s2">&quot;👋 こんにちは！Aria です。天気を調べられます！「パリの天気は？」と聞いてみてください！&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_message</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ツール対応のメッセージ処理&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">)</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;thread&quot;</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">tool_steps</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">async</span> <span class="k">for</span> <span class="n">update</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_stream</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">thread</span><span class="o">=</span><span class="n">thread</span><span class="p">):</span>
+        <span class="c1"># ツールの呼び出しと結果を処理</span>
+        <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">update</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+                <span class="c1"># 関数呼び出しを検出 — 名前がある最初のチャンクでステップを作成</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">FunctionCallContent</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">content</span><span class="o">.</span><span class="n">call_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tool_steps</span><span class="p">:</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">Step</span><span class="p">(</span>
+                            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;🔧 </span><span class="si">{</span><span class="n">content</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;tool&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">await</span> <span class="n">step</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+                        <span class="n">tool_steps</span><span class="p">[</span><span class="n">content</span><span class="o">.</span><span class="n">call_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span>
+
+                <span class="c1"># 関数の結果を検出</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">FunctionResultContent</span><span class="p">):</span>
+                    <span class="n">step</span> <span class="o">=</span> <span class="n">tool_steps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">call_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">step</span><span class="p">:</span>
+                        <span class="n">step</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">result</span>
+                        <span class="k">await</span> <span class="n">step</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># テキスト応答をストリーミング</span>
+        <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">stream_token</span><span class="p">(</span><span class="n">update</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="_4">🔑 主な変更点</h3>
+<ul>
+<li><code>FunctionCallContent</code> と <code>FunctionResultContent</code> — ツール処理用の適切なインポート</li>
+<li><code>isinstance(content, FunctionCallContent)</code> — ツール呼び出しのチェック</li>
+<li><code>content.call_id</code> — ツールステップ追跡用の一意な識別子</li>
+<li><code>tool_steps</code> 辞書パターン — <code>call_id</code> をキーにステップ参照を保存</li>
+</ul>
+<hr />
+<h2 id="5">▶️ ステップ 5: 実行とテスト</h2>
+<p>アプリを起動します：</p>
+<div class="highlight"><pre><span></span><code>chainlit<span class="w"> </span>run<span class="w"> </span>app.py<span class="w"> </span>-w
+</code></pre></div>
+<h3 id="_5">テストシナリオ</h3>
+<p><strong>テスト 1: 天気（ツール使用）</strong></p>
+<div class="highlight"><pre><span></span><code>あなた: ロンドンの天気は？
+[ツールステップ表示]
+Aria: ロンドンの天気は7°Cで曇りです...
+</code></pre></div>
+<p><strong>テスト 2: 天気以外（ツールなし）</strong></p>
+<div class="highlight"><pre><span></span><code>あなた: Pythonとは？
+Aria: Python はプログラミング言語で...
+（ツール呼び出しなし）
+</code></pre></div>
+<p><strong>テスト 3: 複数都市</strong></p>
+<div class="highlight"><pre><span></span><code>あなた: 東京とシドニーの天気を比較して
+[2つのツール呼び出し]
+Aria: 東京は8°C、シドニーは22°C...
+</code></pre></div>
+<hr />
+<h2 id="_6">📄 完成コード</h2>
+<details class="example">
+<summary>完成コード: tools.py（クリックで展開）</summary>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Phase 5: Tool Definitions</span>
+<span class="sd">Tools that can be called by the agent.</span>
+
+<span class="sd">Key Concepts:</span>
+<span class="sd">- Function-based tools with type annotations</span>
+<span class="sd">- Annotated parameters with Field descriptions</span>
+<span class="sd">- Docstrings are used by the LLM to understand when to use tools</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_weather</span><span class="p">(</span>
+    <span class="n">city</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;The name of the city (e.g., &#39;London&#39;, &#39;Tokyo&#39;)&quot;</span><span class="p">)]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the current weather for a city.</span>
+
+<span class="sd">    Returns current weather conditions including temperature, condition, and humidity.</span>
+<span class="sd">    Use this tool when the user asks about weather in a specific location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WEATHER_API_KEY&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">api_key</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error: WEATHER_API_KEY not set in .env&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;http://api.weatherapi.com/v1/current.json&quot;</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">city</span><span class="p">},</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+        <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">country</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">][</span><span class="s2">&quot;country&quot;</span><span class="p">]</span>
+        <span class="n">temp_c</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;temp_c&quot;</span><span class="p">]</span>
+        <span class="n">temp_f</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;temp_f&quot;</span><span class="p">]</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>
+        <span class="n">wind_kph</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">][</span><span class="s2">&quot;wind_kph&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Weather for </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">country</span><span class="si">}</span><span class="s2">:</span>
+<span class="s2">🌡️ Temperature: </span><span class="si">{</span><span class="n">temp_c</span><span class="si">}</span><span class="s2">°C (</span><span class="si">{</span><span class="n">temp_f</span><span class="si">}</span><span class="s2">°F)</span>
+<span class="s2">☁️ Condition: </span><span class="si">{</span><span class="n">condition</span><span class="si">}</span>
+<span class="s2">💧 Humidity: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">💨 Wind: </span><span class="si">{</span><span class="n">wind_kph</span><span class="si">}</span><span class="s2"> km/h&quot;&quot;&quot;</span>
+
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Could not find weather for &#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s2">&#39;. Please check the city name.&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Weather API error: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">TimeoutException</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Weather API timed out. Please try again.&quot;</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Error fetching weather: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="c1"># List of tools to give to the agent</span>
+<span class="n">TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_weather</span><span class="p">]</span>
+</code></pre></div>
+</details>
+<details class="example">
+<summary>完成コード: app.py（クリックで展開）</summary>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Phase 5: Agent with Tool Calling</span>
+<span class="sd">Run with: chainlit run app.py -w</span>
+
+<span class="sd">This phase adds tools to the agent, allowing it to fetch</span>
+<span class="sd">real-time data from external APIs.</span>
+
+<span class="sd">Key Concepts:</span>
+<span class="sd">- Adding tools to ChatAgent</span>
+<span class="sd">- Tool calling flow (think → act → observe)</span>
+<span class="sd">- Displaying tool steps in Chainlit UI</span>
+<span class="sd">- Combining LLM knowledge with external data</span>
+
+<span class="sd">Prerequisites:</span>
+<span class="sd">- Phase 4 completed</span>
+<span class="sd">- WEATHER_API_KEY in .env</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">chainlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncOpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatAgent</span><span class="p">,</span> <span class="n">FunctionCallContent</span><span class="p">,</span> <span class="n">FunctionResultContent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agent_framework.openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIChatClient</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">TOOLS</span>
+
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="n">SYSTEM_PROMPT</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;You are a helpful AI assistant named Aria.</span>
+<span class="s2">You have access to tools that let you fetch real-time information.</span>
+
+<span class="s2">Available tools:</span>
+<span class="s2">- get_weather: Get current weather for any city</span>
+
+<span class="s2">When users ask about weather, USE the get_weather tool. Don&#39;t make up weather data.</span>
+<span class="s2">For other questions, answer from your knowledge.</span>
+
+<span class="s2">Current date: </span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_chat_client</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an Agent Framework chat client using GitHub Models.&quot;&quot;&quot;</span>
+    <span class="n">openai_client</span> <span class="o">=</span> <span class="n">AsyncOpenAI</span><span class="p">(</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">),</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://models.github.ai/inference&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">OpenAIChatClient</span><span class="p">(</span>
+        <span class="n">async_client</span><span class="o">=</span><span class="n">openai_client</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_agent</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a ChatAgent with tools.&quot;&quot;&quot;</span>
+    <span class="n">chat_client</span> <span class="o">=</span> <span class="n">get_chat_client</span><span class="p">()</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">ChatAgent</span><span class="p">(</span>
+        <span class="n">chat_client</span><span class="o">=</span><span class="n">chat_client</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Aria&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A helpful AI assistant with weather capabilities&quot;</span><span class="p">,</span>
+        <span class="n">instructions</span><span class="o">=</span><span class="n">SYSTEM_PROMPT</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">TOOLS</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">agent</span>
+
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_chat_start</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the chat session.&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">create_agent</span><span class="p">()</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_new_thread</span><span class="p">()</span>
+
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span>
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;thread&quot;</span><span class="p">,</span> <span class="n">thread</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span>
+        <span class="n">content</span><span class="o">=</span><span class="s2">&quot;👋 Hi! I&#39;m Aria. I can check the weather for you! Try: &#39;What&#39;s the weather in Paris?&#39;&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_message</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle incoming messages with tool support.&quot;&quot;&quot;</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">)</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;thread&quot;</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">tool_steps</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">async</span> <span class="k">for</span> <span class="n">update</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_stream</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">thread</span><span class="o">=</span><span class="n">thread</span><span class="p">):</span>
+        <span class="c1"># Handle tool invocation and results</span>
+        <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">update</span><span class="o">.</span><span class="n">contents</span><span class="p">:</span>
+                <span class="c1"># Detect function call - only show step when we have the name (first chunk)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">FunctionCallContent</span><span class="p">):</span>
+                    <span class="c1"># Only create step on the first chunk that has a name</span>
+                    <span class="k">if</span> <span class="n">content</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">content</span><span class="o">.</span><span class="n">call_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tool_steps</span><span class="p">:</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">Step</span><span class="p">(</span>
+                            <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;🔧 </span><span class="si">{</span><span class="n">content</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;tool&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">await</span> <span class="n">step</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+                        <span class="n">tool_steps</span><span class="p">[</span><span class="n">content</span><span class="o">.</span><span class="n">call_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">step</span>
+
+                <span class="c1"># Detect function result</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">FunctionResultContent</span><span class="p">):</span>
+                    <span class="n">step</span> <span class="o">=</span> <span class="n">tool_steps</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">call_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">step</span><span class="p">:</span>
+                        <span class="n">step</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">result</span>
+                        <span class="k">await</span> <span class="n">step</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># Stream text response</span>
+        <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">stream_token</span><span class="p">(</span><span class="n">update</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<hr />
+<h2 id="_7">💡 ポイント</h2>
+<ul>
+<li><strong>ツールは普通の Python 関数</strong> — 型ヒントとドキュメント文字列で LLM が使い方を理解します</li>
+<li><strong>エージェントが判断する</strong> — どのツールをいつ使うかはエージェントが自動的に決定します</li>
+<li><strong><code>FunctionCallContent</code> と <code>FunctionResultContent</code></strong> — ツールの呼び出しと結果を処理するための仕組みです</li>
+<li><strong><code>call_id</code></strong> — 複数のツール呼び出しを正しく追跡するための識別子です</li>
+</ul>
+<hr />
+<h2 id="_8">✅ チェックポイント</h2>
+<p>以下を確認してください：</p>
+<ul>
+<li>[x] <code>tools.py</code> に <code>get_weather</code> 関数が定義されている</li>
+<li>[x] <code>app.py</code> でエージェントにツールが追加されている</li>
+<li>[x] 天気の質問でツールが呼び出される</li>
+<li>[x] 天気以外の質問にはツールなしで回答される</li>
+<li>[x] 複数都市の天気を比較できる</li>
+<li>[x] UI にツールステップが表示される</li>
+</ul>
+<hr />
+<h2 id="_9">❗ よくある問題</h2>
+<table>
+<thead>
+<tr>
+<th>問題</th>
+<th>解決方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WEATHER_API_KEY</code> エラー</td>
+<td><code>.env</code> ファイルに正しい API キーが設定されているか確認</td>
+</tr>
+<tr>
+<td>天気データが取得できない</td>
+<td>API キーが有効か、都市名が正しいか確認</td>
+</tr>
+<tr>
+<td>ツールが呼び出されない</td>
+<td>システムプロンプトにツールの説明が含まれているか確認</td>
+</tr>
+<tr>
+<td><code>ImportError</code></td>
+<td><code>pip install httpx pydantic</code> で必要なパッケージをインストール</td>
+</tr>
+<tr>
+<td>ステップが表示されない</td>
+<td><code>FunctionCallContent</code> / <code>FunctionResultContent</code> のインポートを確認</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>次のステップ: <a href="../06-mcp-integration/">Phase 6: MCP 連携</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="フッター" >
+        
+          
+          <a href="../04-agent-framework/" class="md-footer__link md-footer__link--prev" aria-label="前: Phase 4 - Agent Framework">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                前
+              </span>
+              <div class="md-ellipsis">
+                Phase 4 - Agent Framework
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../06-mcp-integration/" class="md-footer__link md-footer__link--next" aria-label="次: Phase 6 - MCP 連携">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                次
+              </span>
+              <div class="md-ellipsis">
+                Phase 6 - MCP 連携
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tabs.link", "navigation.instant", "navigation.top", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

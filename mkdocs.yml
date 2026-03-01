@@ -1,0 +1,60 @@
+site_name: "Microsoft Agent Framework x Chainlit ハンズオン"
+repo_url: https://github.com/your-org/your-repo
+
+theme:
+  name: material
+  language: ja
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: ダークモードに切り替え
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: ライトモードに切り替え
+  features:
+    - content.code.copy
+    - content.tabs.link
+    - navigation.instant
+    - navigation.top
+    - navigation.footer
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      base_path: "."
+      check_paths: false
+
+nav:
+  - はじめに: index.md
+  - ワークショップ:
+      - Phase 1 - 環境構築: 01-environment.md
+      - Phase 2 - Microsoft Foundry: 02-microsoft-foundry-models.md
+      - Phase 3 - Chainlit 基礎: 03-chainlit-basics.md
+      - Phase 4 - Agent Framework: 04-agent-framework.md
+      - Phase 5 - ツール呼び出し: 05-tool-calling.md
+      - Phase 6 - MCP 連携: 06-mcp-integration.md
+  - リファレンス:
+      - トラブルシューティング: 99-troubleshooting.md
