@@ -1,5 +1,5 @@
 site_name: "Microsoft Agent Framework x Chainlit ハンズオン"
-repo_url: https://github.com/your-org/your-repo
+repo_url: https://github.com/beachside-project/microsoft-agent-framework-chainlit-workshop
 
 theme:
   name: material
