@@ -157,7 +157,7 @@ async def main(message: cl.Message):
 @cl.on_message
 async def main(message: cl.Message):
     """ストリーミング対応のメッセージ処理"""
-    client = get_openai_client()
+    client = get_azure_openai_client()
     messages = cl.user_session.get("messages")
 
     # ユーザーメッセージを履歴に追加
