@@ -169,7 +169,7 @@ async def main(message: cl.Message):
 
     # OpenAI SDK でトークンごとにストリーミング
     stream = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=os.environ["MSF_MODEL_DEPLOYMENT_NAME"],
         messages=messages,
         stream=True,
     )
