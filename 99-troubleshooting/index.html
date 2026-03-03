@@ -1,0 +1,1746 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../06-mcp-integration/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>トラブルシューティング - Microsoft Agent Framework x Chainlit ハンズオン</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="Microsoft Agent Framework x Chainlit ハンズオン" class="md-header__button md-logo" aria-label="Microsoft Agent Framework x Chainlit ハンズオン" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Microsoft Agent Framework x Chainlit ハンズオン
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              トラブルシューティング
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/beachside-project/microsoft-agent-framework-chainlit-workshop" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Microsoft Agent Framework x Chainlit ハンズオン" class="md-nav__button md-logo" aria-label="Microsoft Agent Framework x Chainlit ハンズオン" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Microsoft Agent Framework x Chainlit ハンズオン
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/beachside-project/microsoft-agent-framework-chainlit-workshop" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    はじめに
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ワークショップ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ワークショップ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 1 - 環境構築
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-microsoft-foundry-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 2 - Microsoft Foundry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-chainlit-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 3 - Chainlit 基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-agent-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 4 - Agent Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-tool-calling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 5 - ツール呼び出し
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-mcp-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 6 - MCP 連携
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    リファレンス
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    リファレンス
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 一般的なセットアップの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 フェーズ別の問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 フェーズ別の問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-microsoft-foundry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 2: Microsoft Foundry への接続
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-chainlit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 3: Chainlit チャットインターフェース
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-agent-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 4: Agent Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-tool-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 5: Tool Calling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 6: MCP 統合
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🐛 よくあるコードの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 パフォーマンスの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔐 セキュリティの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📞 ヘルプを得る
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📞 ヘルプを得る">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        リソース
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ クイックチェックリスト
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 一般的なセットアップの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 フェーズ別の問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📋 フェーズ別の問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-microsoft-foundry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 2: Microsoft Foundry への接続
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-chainlit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 3: Chainlit チャットインターフェース
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-agent-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 4: Agent Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-tool-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 5: Tool Calling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ 6: MCP 統合
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🐛 よくあるコードの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 パフォーマンスの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔐 セキュリティの問題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📞 ヘルプを得る
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📞 ヘルプを得る">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        リソース
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ クイックチェックリスト
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">トラブルシューティングガイド</h1>
+<div class="admonition danger">
+<p class="admonition-title">問題が発生していますか？</p>
+<p>このガイドでは、ワークショップ中に遭遇する可能性のある一般的な問題とその解決策を網羅しています。問題が発生した場合は、まず該当するセクションを確認してください。または、お気軽にスタッフにご質問ください。</p>
+</div>
+<hr />
+<h2 id="_2">🔧 一般的なセットアップの問題</h2>
+<details class="warning">
+<summary>Python バージョンの問題</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>Python 3.11 以上が必要ですが、古いバージョンがインストールされています。
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<p>現在の Python バージョンを確認します：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>--version
+</code></pre></div>
+<p>Python 3.11 未満の場合は、最新版をインストールしてください：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pyenv を使用している場合</span>
+pyenv<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.11
+pyenv<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="m">3</span>.11
+</code></pre></div>
+<p>複数のバージョンがインストールされている場合：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># python3 コマンドを試す</span>
+python3<span class="w"> </span>--version
+</code></pre></div>
+</details>
+<details class="warning">
+<summary>仮想環境が有効化されていない</summary>
+<p><strong>問題:</strong>
+パッケージをインストールしても見つからない、または間違った Python が使用されている。</p>
+<p><strong>解決策:</strong></p>
+<p>仮想環境を作成して有効化します：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 仮想環境を作成</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+</code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows (PowerShell)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>有効化されると、プロンプトに <code>(.venv)</code> が表示されます。</p>
+<div class="admonition tip">
+<p class="admonition-title">確認方法</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># どの Python が使用されているか確認</span>
+which<span class="w"> </span>python<span class="w">   </span><span class="c1"># macOS / Linux</span>
+where<span class="w"> </span>python<span class="w">   </span><span class="c1"># Windows</span>
+</code></pre></div>
+</div>
+</details>
+<hr />
+<h2 id="_3">📋 フェーズ別の問題</h2>
+<h3 id="2-microsoft-foundry">フェーズ 2: Microsoft Foundry への接続</h3>
+<details class="warning">
+<summary>404: Resource not found エラー</summary>
+<ul>
+<li><code>.env</code> ファイルの <code>MSF_MODEL_ENDPOINT</code>, <code>MSF_MODEL_API_VERSION</code>, <code>MSF_MODEL_DEPLOYMENT_NAME</code> が正しいか確認してください。</li>
+<li><code>load_dotenv(override=True)</code> が呼び出されているか確認してください。</li>
+</ul>
+</details>
+<details class="warning">
+<summary>401 エラー</summary>
+<ul>
+<li><code>.env</code> の <code>MSF_MODEL_API_KEY</code> が正しいか確認してください。</li>
+</ul>
+</details>
+<details class="warning">
+<summary>キーは正しいはずだが接続できない</summary>
+<p><strong>原因:</strong></p>
+<ul>
+<li>インターネット接続の問題</li>
+<li>ファイアウォールやプロキシの設定</li>
+<li>GitHub Models サービスのダウンタイム</li>
+</ul>
+<p><strong>解決策:</strong></p>
+</details>
+<p>会社の PC などでプロキシの設定がされている場合ははずしてお試しください。
+    ```</p>
+<details class="warning">
+<summary>Module not found: openai</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>ModuleNotFoundError: No module named &#39;openai&#39;
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 仮想環境が有効化されていることを確認してからインストール</span>
+pip<span class="w"> </span>install<span class="w"> </span>openai
+</code></pre></div>
+<p>それでも解決しない場合：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pip のパスを確認</span>
+pip<span class="w"> </span>--version
+
+<span class="c1"># 明示的に python -m pip を使用</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>openai
+</code></pre></div>
+</details>
+<h3 id="3-chainlit">フェーズ 3: Chainlit チャットインターフェース</h3>
+<details class="warning">
+<summary>ポート 8000 がすでに使用されている</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>Address already in use: port 8000
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">macOS / Linux</label><label for="__tabbed_2_2">Windows (PowerShell)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># ポート 8000 を使用しているプロセスを確認</span>
+lsof<span class="w"> </span>-i<span class="w"> </span>:8000
+<span class="c1"># プロセスを終了</span>
+<span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span>&lt;PID&gt;
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c"># ポート 8000 を使用しているプロセスを確認</span>
+<span class="n">netstat</span> <span class="n">-ano</span> <span class="p">|</span> <span class="n">findstr</span> <span class="p">:</span><span class="n">8000</span>
+<span class="c"># プロセスを終了</span>
+<span class="n">taskkill</span> <span class="p">/</span><span class="n">PID</span> <span class="p">&lt;</span><span class="n">PID</span><span class="p">&gt;</span> <span class="p">/</span><span class="n">F</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>または、別のポートで起動します：</p>
+<div class="highlight"><pre><span></span><code>chainlit<span class="w"> </span>run<span class="w"> </span>app.py<span class="w"> </span>--port<span class="w"> </span><span class="m">8001</span>
+</code></pre></div>
+</details>
+<details class="warning">
+<summary>ストリーミングが動作しない</summary>
+<p><strong>問題:</strong>
+レスポンスが一度にすべて表示され、ストリーミング（逐次表示）されない。</p>
+<p><strong>解決策:</strong></p>
+<p><code>stream=True</code> パラメータが設定されていることを確認します：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ストリーミングを有効にする</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-5.2&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># これが重要</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>Chainlit でストリーミングを処理する正しい方法：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">chainlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cl</span>
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_message</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+
+    <span class="c1"># ストリーミングレスポンスを処理</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">}],</span>
+        <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">stream_token</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<details class="warning">
+<summary>ストリーム処理での IndexError</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>IndexError: list index out of range
+</code></pre></div></p>
+<p><strong>原因:</strong>
+ストリーミングチャンクの <code>choices</code> が空の場合があります。</p>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+    <span class="c1"># choices が存在するか確認</span>
+    <span class="k">if</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span> <span class="ow">and</span> <span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">stream_token</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="warning">
+<summary>メッセージ履歴が動作しない</summary>
+<p><strong>問題:</strong>
+ボットが前の会話を覚えていない。</p>
+<p><strong>解決策:</strong></p>
+<p>セッションにメッセージ履歴を保存していることを確認します：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">chainlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cl</span>
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_chat_start</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">():</span>
+    <span class="c1"># セッションにメッセージ履歴を初期化</span>
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;あなたは親切なアシスタントです。&quot;</span><span class="p">}</span>
+    <span class="p">])</span>
+
+<span class="nd">@cl</span><span class="o">.</span><span class="n">on_message</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+    <span class="c1"># 履歴を取得</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">)</span>
+    <span class="c1"># 新しいメッセージを追加</span>
+    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">})</span>
+
+    <span class="c1"># API 呼び出し</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
+    <span class="p">)</span>
+
+    <span class="n">assistant_message</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+    <span class="c1"># アシスタントの応答も履歴に追加</span>
+    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">assistant_message</span><span class="p">})</span>
+    <span class="c1"># セッションを更新</span>
+    <span class="n">cl</span><span class="o">.</span><span class="n">user_session</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="n">messages</span><span class="p">)</span>
+
+    <span class="k">await</span> <span class="n">cl</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">assistant_message</span><span class="p">)</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<h3 id="4-agent-framework">フェーズ 4: Agent Framework</h3>
+<details class="warning">
+<summary>ModuleNotFoundError</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>ModuleNotFoundError: No module named &#39;agent_framework&#39;
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Agent Framework をインストール</span>
+pip<span class="w"> </span>install<span class="w"> </span>agent-framework
+</code></pre></div>
+<p>パッケージ名とインポート名が異なる場合があります：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 正しいインポート方法を確認</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">agent_framework</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">agent_framework</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<h3 id="5-tool-calling">フェーズ 5: Tool Calling</h3>
+<details class="warning">
+<summary>WEATHER_API_KEY が設定されていない</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>WEATHER_API_KEY が見つかりません。
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<p><code>.env</code> ファイルに天気 API キーを追加します：</p>
+<div class="highlight"><pre><span></span><code>WEATHER_API_KEY=your_weather_api_key
+</code></pre></div>
+<p>コードで読み込みます：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WEATHER_API_KEY&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">weather_api_key</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;WEATHER_API_KEY が .env ファイルに設定されていません&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="warning">
+<summary>httpx.ConnectError</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>httpx.ConnectError: [Errno 111] Connection refused
+</code></pre></div></p>
+<p><strong>原因:</strong></p>
+<ul>
+<li>外部 API サーバーがダウンしている</li>
+<li>URL が間違っている</li>
+<li>ネットワーク接続の問題</li>
+</ul>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">call_api_safely</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">ConnectError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;接続エラー: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> に接続できません&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">TimeoutException</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;タイムアウト: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> からの応答がありません&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="n">httpx</span><span class="o">.</span><span class="n">HTTPStatusError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP エラー: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+</details>
+<h3 id="6-mcp">フェーズ 6: MCP 統合</h3>
+<details class="warning">
+<summary>MCP ツールが使用されない</summary>
+<p><strong>問題:</strong>
+MCP ツールは一覧に表示されるが、モデルがそれを呼び出さない。</p>
+<p><strong>解決策:</strong></p>
+<ol>
+<li>ツールの <code>description</code> が十分に詳しいか確認：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># 良い例 - 詳細な説明</span>
+<span class="n">tool</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;search_database&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;データベースからキーワードに基づいてドキュメントを検索します。&quot;</span>
+                   <span class="s2">&quot;全文検索をサポートし、最大10件の結果を返します。&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># 悪い例 - 説明が不十分</span>
+<span class="n">tool</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;search&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;検索する&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<hr />
+<h2 id="_4">🐛 よくあるコードの問題</h2>
+<details class="tip">
+<summary>Async/Await のミス</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>RuntimeWarning: coroutine was never awaited
+</code></pre></div>
+または
+<div class="highlight"><pre><span></span><code>TypeError: object Response can&#39;t be used in &#39;await&#39; expression
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 間違い - await が不足</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">some_async_function</span><span class="p">()</span>  <span class="c1"># await が必要！</span>
+
+<span class="c1"># ✅ 正しい - await を使用</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">some_async_function</span><span class="p">()</span>
+
+<span class="c1"># ❌ 間違い - 非同期でない関数に await を使用</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sync_function</span><span class="p">()</span>  <span class="c1"># これは不要</span>
+
+<span class="c1"># ✅ 正しい - 同期関数はそのまま呼び出す</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sync_function</span><span class="p">()</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">ヒント</p>
+<p>関数が <code>async def</code> で定義されている場合は <code>await</code> が必要です。通常の <code>def</code> で定義されている場合は <code>await</code> は不要です。</p>
+</div>
+</details>
+<details class="tip">
+<summary>インポート順序の問題</summary>
+<p><strong>問題:</strong>
+<div class="highlight"><pre><span></span><code>ImportError: cannot import name &#39;xxx&#39; from &#39;yyy&#39;
+</code></pre></div></p>
+<p><strong>解決策:</strong></p>
+<p>Python のインポートは以下の順序で記述することを推奨します：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. 標準ライブラリ</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="c1"># 2. サードパーティライブラリ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">chainlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="c1"># 3. ローカルモジュール</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_weather</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span>
+</code></pre></div>
+<p>パッケージがインストールされているか確認：</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>openai
+pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>chainlit
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>文字列フォーマットの問題</summary>
+<p><strong>問題:</strong>
+f-string や文字列フォーマットが正しく動作しない。</p>
+<p><strong>解決策:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 間違い - 波括弧のエスケープ忘れ</span>
+<span class="n">json_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s2">&quot;key&quot;</span><span class="si">:</span><span class="s2"> &quot;</span><span class="n">value</span><span class="s2">&quot;}&quot;</span>  <span class="c1"># SyntaxError</span>
+
+<span class="c1"># ✅ 正しい - 波括弧をエスケープ</span>
+<span class="n">json_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;key&quot;: &quot;value&quot;</span><span class="se">}}</span><span class="s1">&#39;</span>
+
+<span class="c1"># ❌ 間違い - 辞書への直接フォーマット</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;テスト&quot;</span><span class="p">}</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;結果: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># SyntaxError</span>
+
+<span class="c1"># ✅ 正しい - 変数を使用</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;テスト&quot;</span><span class="p">}</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;結果: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># ✅ またはシングルクォートを使用</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;結果: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+</details>
+<hr />
+<h2 id="_5">📊 パフォーマンスの問題</h2>
+<details class="tip">
+<summary>レスポンスが遅い</summary>
+<p><strong>原因:</strong></p>
+<ul>
+<li>モデルへのリクエストが多すぎる</li>
+<li>コンテキストウィンドウが大きすぎる</li>
+<li>ネットワークレイテンシ</li>
+</ul>
+<p><strong>解決策:</strong></p>
+<ol>
+<li><strong>ストリーミングを使用する</strong> - ユーザーに部分的なレスポンスを早く表示できます：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># ストリーミングでレスポンスを高速化</span>
+<span class="p">)</span>
+</code></pre></div>
+<ol>
+<li><strong>メッセージ履歴を制限する</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># 最新の N 件のメッセージだけを送信</span>
+<span class="n">MAX_MESSAGES</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">trim_messages</span><span class="p">(</span><span class="n">messages</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGES</span><span class="p">:</span>
+        <span class="c1"># システムメッセージは常に保持</span>
+        <span class="n">system_msg</span> <span class="o">=</span> <span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">recent</span> <span class="o">=</span> <span class="n">messages</span><span class="p">[</span><span class="o">-</span><span class="n">MAX_MESSAGES</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">system_msg</span><span class="p">]</span> <span class="o">+</span> <span class="n">recent</span>
+    <span class="k">return</span> <span class="n">messages</span>
+</code></pre></div>
+<ol>
+<li><strong><code>max_tokens</code> を設定する</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span>  <span class="c1"># 応答の最大トークン数を制限</span>
+<span class="p">)</span>
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>トークン使用量が多い</summary>
+<p><strong>原因:</strong></p>
+<ul>
+<li>システムプロンプトが長すぎる</li>
+<li>メッセージ履歴が蓄積されている</li>
+<li>不必要に詳細な応答を要求している</li>
+</ul>
+<p><strong>解決策:</strong></p>
+<ol>
+<li><strong>トークン使用量を監視する</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
+<span class="p">)</span>
+
+<span class="c1"># トークン使用量を表示</span>
+<span class="n">usage</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">usage</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;入力トークン: </span><span class="si">{</span><span class="n">usage</span><span class="o">.</span><span class="n">prompt_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;出力トークン: </span><span class="si">{</span><span class="n">usage</span><span class="o">.</span><span class="n">completion_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;合計トークン: </span><span class="si">{</span><span class="n">usage</span><span class="o">.</span><span class="n">total_tokens</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ol>
+<li><strong>システムプロンプトを簡潔にする</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 長すぎるシステムプロンプト</span>
+<span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;あなたは非常に知識豊富な...(500語以上の説明)...&quot;&quot;&quot;</span>
+
+<span class="c1"># ✅ 簡潔なシステムプロンプト</span>
+<span class="n">system_prompt</span> <span class="o">=</span> <span class="s2">&quot;あなたは親切なアシスタントです。簡潔に回答してください。&quot;</span>
+</code></pre></div>
+<ol>
+<li><strong>要約機能を実装する</strong> - 会話が長くなったら古いメッセージを要約します。</li>
+</ol>
+</details>
+<hr />
+<h2 id="_6">🔐 セキュリティの問題</h2>
+<details class="danger">
+<summary>トークンが Git にコミットされた</summary>
+<p><strong>問題:</strong>
+<code>GITHUB_TOKEN</code> やその他のシークレットを誤って Git リポジトリにコミットしてしまった。</p>
+<p><strong>解決策:</strong></p>
+<ol>
+<li>
+<p><strong>すぐにトークンを無効化する</strong> - GitHub の設定画面でトークンを取り消してください。</p>
+</li>
+<li>
+<p><strong>Git の履歴からトークンを削除する</strong>：</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># .env ファイルを .gitignore に追加</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;.env&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore
+
+<span class="c1"># Git の履歴から .env を削除</span>
+git<span class="w"> </span>filter-branch<span class="w"> </span>--force<span class="w"> </span>--index-filter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s1">&#39;git rm --cached --ignore-unmatch .env&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--prune-empty<span class="w"> </span>--tag-name-filter<span class="w"> </span>cat<span class="w"> </span>--<span class="w"> </span>--all
+
+<span class="c1"># 強制プッシュ（注意して使用）</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--force<span class="w"> </span>--all
+</code></pre></div>
+<ol>
+<li><strong>新しいトークンを生成する</strong> - 古いトークンが漏洩した可能性があるため、必ず新しいトークンを作成してください。</li>
+</ol>
+<div class="admonition danger">
+<p class="admonition-title">重要</p>
+<p>一度公開リポジトリにプッシュされたトークンは、すでに第三者にスキャンされている可能性があります。<strong>必ず</strong>トークンを無効化してください。</p>
+</div>
+<ol>
+<li><strong>予防策</strong> - <code>.gitignore</code> に以下を追加：</li>
+</ol>
+<div class="highlight"><pre><span></span><code># 環境変数ファイル
+.env
+.env.local
+.env.*.local
+
+# シークレット
+*.pem
+*.key
+</code></pre></div>
+</details>
+<details class="danger">
+<summary>エラーメッセージにトークンが漏洩する</summary>
+<p><strong>問題:</strong>
+エラーログやデバッグ出力にトークンが表示されてしまう。</p>
+<p><strong>解決策:</strong></p>
+<ol>
+<li><strong>トークンをログに記録しない</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># ❌ 間違い - トークンがログに表示される</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ✅ 正しい - トークンをマスクする</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Token: </span><span class="si">{</span><span class="n">token</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">****&quot;</span><span class="p">)</span>
+</code></pre></div>
+<ol>
+<li><strong>例外処理でトークンを除外する</strong>：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="n">messages</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># エラーメッセージからトークンを除去</span>
+    <span class="n">error_msg</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">token</span> <span class="ow">and</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">error_msg</span><span class="p">:</span>
+        <span class="n">error_msg</span> <span class="o">=</span> <span class="n">error_msg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;****&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;API エラー: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<hr />
+<h2 id="_7">📞 ヘルプを得る</h2>
+<p>上記の解決策で問題が解決しない場合は、以下の手順を試してください。</p>
+<details class="tip">
+<summary>デバッグモードを有効にする</summary>
+<p>より詳細なログを取得するために、デバッグモードを有効にします：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="c1"># デバッグレベルのログを有効化</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># OpenAI のデバッグログを有効化</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;openai&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;httpx&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</code></pre></div>
+<p>Chainlit のデバッグモード：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># デバッグモードで起動</span>
+chainlit<span class="w"> </span>run<span class="w"> </span>app.py<span class="w"> </span>--debug
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>Chainlit のログを確認する</summary>
+<p>Chainlit は <code>.chainlit/logs</code> ディレクトリにログを出力します：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ログファイルを確認</span>
+cat<span class="w"> </span>.chainlit/logs/app.log
+
+<span class="c1"># リアルタイムでログを監視</span>
+tail<span class="w"> </span>-f<span class="w"> </span>.chainlit/logs/app.log
+</code></pre></div>
+</details>
+<details class="tip">
+<summary>個々のコンポーネントをテストする</summary>
+<p>問題を切り分けるために、各コンポーネントを個別にテストします：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. API 接続テスト</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://models.github.ai/inference&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GITHUB_TOKEN&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># 簡単なテスト</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;テスト&quot;</span><span class="p">}],</span>
+        <span class="n">max_tokens</span><span class="o">=</span><span class="mi">10</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ API 接続成功: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ API 接続失敗: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># 2. ツール呼び出しテスト</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;function&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;test_tool&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;テスト用ツール&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;テスト入力&quot;</span><span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;テストツールを使ってください&quot;</span><span class="p">}],</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ ツール呼び出し成功: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ ツールが呼び出されませんでした&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ ツール呼び出し失敗: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</details>
+<h3 id="_8">リソース</h3>
+<p>問題が解決しない場合は、以下の公式ドキュメントを参照してください：</p>
+<ul>
+<li><a href="https://docs.chainlit.io">Chainlit ドキュメント</a></li>
+<li><a href="https://github.com/microsoft/agent-framework">Agent Framework GitHub</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI API ドキュメント</a></li>
+<li><a href="https://github.com/marketplace/models">GitHub Models ドキュメント</a></li>
+</ul>
+<hr />
+<h2 id="_9">✅ クイックチェックリスト</h2>
+<p>問題のデバッグを始める前に、以下の項目を確認してください：</p>
+<ul>
+<li>[ ] Python 3.11 以上がインストール済み</li>
+<li>[ ] 仮想環境が有効化済み（プロンプトに <code>(.venv)</code> が表示）</li>
+<li>[ ] <code>.env</code> ファイルに GITHUB_TOKEN が設定済み</li>
+<li>[ ] 必要なパッケージがインストール済み</li>
+<li>[ ] 正しいフェーズのフォルダにいる</li>
+<li>[ ] コードがソリューションファイルと完全に一致</li>
+<li>[ ] import やファイル名にタイプミスがない</li>
+<li>[ ] ポート 8000 が利用可能</li>
+<li>[ ] インターネット接続が正常</li>
+<li>[ ] GitHub トークンが有効期限内</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">それでも解決しない場合</p>
+<p>上記のチェックリストをすべて確認しても問題が解決しない場合は、エラーメッセージの全文をコピーして、インストラクターに相談してください。</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="フッター" >
+        
+          
+          <a href="../06-mcp-integration/" class="md-footer__link md-footer__link--prev" aria-label="前: Phase 6 - MCP 連携">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                前
+              </span>
+              <div class="md-ellipsis">
+                Phase 6 - MCP 連携
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.tabs.link", "navigation.instant", "navigation.top", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
