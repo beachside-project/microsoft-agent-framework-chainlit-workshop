@@ -195,13 +195,23 @@ async def main(message: cl.Message):
 - session は自動的に全メッセージを保存する
 - 同じ session を渡すことで会話コンテキストを維持
 
-```python
-# セッション開始時に新しいスレッドを作成
-session = agent.create_session()
+前述で追加したコード内だと、以下の部分で、セッション開始時に新しいスレッドを作成しています。
 
-# 毎回同じスレッドを渡して会話を継続
+```python
+session = agent.create_session()
+```
+
+また、以下の部分で、毎回同じスレッドを渡すことで会話履歴を保持して会話ができています。
+
+```python
 async for update in agent.run(message.content, stream=True, session=session):
     ...
+```
+
+実際に会話が session に保存されるタイミングは以下になります。
+
+```python
+await stream.get_final_response()  # 会話履歴を session に自動保存
 ```
 
 !!! note "Phase 3 との違い"
