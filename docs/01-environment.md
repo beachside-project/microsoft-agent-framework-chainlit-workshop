@@ -122,7 +122,7 @@ opentelemetry-semantic-conventions-ai==0.4.13
 === "uv"
 
     ```bash
-    uv pip install -r requirements.txt
+    uv pip install -r requirements.txt --prerelease allow
     ```
 
 !!! tip "ヒント"
